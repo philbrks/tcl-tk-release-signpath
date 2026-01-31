@@ -45,8 +45,6 @@ jobs:
           cd ..
           mkdir install
           cd install
-          echo "PWD=`pwd`"
-          echo "DIR=`dir`"
           echo "INSTALLDIR=`pwd`" >> $GITHUB_ENV
       - name: Build Tcl (${{ matrix.config }})
         run: |
@@ -57,14 +55,10 @@ jobs:
         working-directory: tcl/win
       - name: Build Tk (${{ matrix.config }})
         run: |
-          &nmake -f makefile.vc all ${{ matrix.config }}
+          &nmake -f makefile.vc all install ${{ matrix.config }}
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
-          echo "INSTALLDIR=$INSTALLDIR"
-          Get-ChildItem -Path "../install" -File
-          cd "../install"
-          Compress-Archive -Path . -DestinationPath "../tcl-tk.zip"  
       - name: Build Test Harness (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc tktest ${{ matrix.config }}
