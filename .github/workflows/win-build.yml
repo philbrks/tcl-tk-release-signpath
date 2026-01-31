@@ -96,7 +96,7 @@ jobs:
       - name: Install (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc install ${{ matrix.config }}
-          Get-ChildItem -Path "C:\Tcl" -Recurse -Files
+          Get-ChildItem -Path "C:\Tcl" -Recurse -File
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
