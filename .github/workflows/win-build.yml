@@ -55,7 +55,7 @@ jobs:
         working-directory: tcl/win
       - name: Build Tk (${{ matrix.config }})
         run: |
-          &nmake -f makefile.vc all install ${{ matrix.config }}
+          &nmake -f makefile.vc all ${{ matrix.config }}
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
