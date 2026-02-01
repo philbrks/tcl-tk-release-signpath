@@ -110,7 +110,7 @@ jobs:
       - name: Upload distribution
         uses: actions/upload-artifact@v4
         with:
-          name: "Tcl/Tk distribution Windows Zipfile"
+          name: "Tcl-Tk distribution Windows Zipfile"
           path: zipdist\Tcl-Tk.zip
   gcc:
     if: 0 == 1
