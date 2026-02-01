@@ -23,8 +23,8 @@ jobs:
       matrix:
         config:
           - ""
-          - "OPTS=symbols"
-          - "OPTS=static"
+          # - "OPTS=symbols"
+          # - "OPTS=static"
     steps:
       - name: Checkout Tk
         uses: actions/checkout@v6
@@ -96,11 +96,18 @@ jobs:
       - name: Install (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc install ${{ matrix.config }}
-          Get-ChildItem -Path "C:\Tcl" -Recurse -File
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
+          # Get-ChildItem -Path "C:\Tcl" -Recurse -File
+          Compress-Archive -Path "C:\Tcl" -DestinationPath Tcl-Tk.zip
+      - name: Upload distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: tcl-distribution-windows
+          path: Tcl-Tk.zip
   gcc:
+    if: 0 == 1
     runs-on: windows-2025
     defaults:
       run:
