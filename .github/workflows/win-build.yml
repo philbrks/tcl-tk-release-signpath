@@ -101,6 +101,8 @@ jobs:
           }
           # Get-ChildItem -Path "C:\Tcl" -Recurse -File
           Compress-Archive -Path "C:\Tcl" -DestinationPath Tcl-Tk.zip
+          pwd
+          dir
       - name: Upload distribution
         uses: actions/upload-artifact@v4
         with:
