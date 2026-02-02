@@ -104,8 +104,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
-          path: "."
-        working-directory: "C:/Tcl"
+          path: "c:/Tcl/."
   gcc:
     if: 0 == 1
     runs-on: windows-2025
