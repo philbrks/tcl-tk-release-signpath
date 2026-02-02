@@ -100,18 +100,12 @@ jobs:
              throw "nmake exit code: $lastexitcode"
           }
           # Get-ChildItem -Path "C:\Tcl" -Recurse -File
-      - name: Package
-        run: |
-          mkdir zipdist
-          Compress-Archive -Path "C:\Tcl" -DestinationPath zipdist\Tcl-Tk.zip
-          pwd
-          dir zipdist
-        working-directory: .
       - name: Upload distribution
         uses: actions/upload-artifact@v4
         with:
-          name: "Tcl-Tk distribution Windows Zipfile"
-          path: zipdist\Tcl-Tk.zip
+          name: "Tcl-Tk Release Distribution (Win64)"
+          path: "."
+          working-directory: "C:/Tcl"
   gcc:
     if: 0 == 1
     runs-on: windows-2025
