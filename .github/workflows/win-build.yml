@@ -105,7 +105,7 @@ jobs:
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
           path: "."
-          working-directory: "C:/Tcl"
+        working-directory: "C:/Tcl"
   gcc:
     if: 0 == 1
     runs-on: windows-2025
