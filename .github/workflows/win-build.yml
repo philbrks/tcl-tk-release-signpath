@@ -39,7 +39,6 @@ jobs:
       - name: Init MSVC
         uses: ilammy/msvc-dev-cmd@v1
       - name: Make Install Location
-      - name: Prepare
         run: |
           mkdir -p install/combined
           echo "INSTALLDIR=$(cd install/combined;pwd)" >> $GITHUB_ENV
