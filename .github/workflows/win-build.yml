@@ -44,7 +44,7 @@ jobs:
           echo "TCLDIR=`pwd`" >> $GITHUB_ENV
           cd ..
           mkdir C:\Tcl
-          echo "INSTALLDIR=C\Tcl" >> $GITHUB_ENV
+          echo "INSTALLDIR=C:\Tcl" >> $GITHUB_ENV
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release install ${{ matrix.config }}
