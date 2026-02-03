@@ -39,12 +39,11 @@ jobs:
       - name: Init MSVC
         uses: ilammy/msvc-dev-cmd@v1
       - name: Make Install Location
-        working-directory: tcl
+      - name: Prepare
         run: |
-          echo "TCLDIR=`pwd`" >> $GITHUB_ENV
-          cd ..
-          mkdir C:\Tcl
-          echo "INSTALLDIR=C:\Tcl" >> $GITHUB_ENV
+          mkdir -p install/combined
+          echo "INSTALLDIR=$(cd install/combined;pwd)" >> $GITHUB_ENV
+        working-directory: "."
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release install ${{ matrix.config }}
@@ -102,7 +101,7 @@ jobs:
       - name: Prepare upload
         run: |
           mkdir zipdist
-          Copy-Item -Path C:\Tcl -Destination zipdist -Recurse
+          Copy-Item -Path install/combined -Destination zipdist -Recurse
         working-directory: "."
       - name: Upload distribution
         uses: actions/upload-artifact@v4
