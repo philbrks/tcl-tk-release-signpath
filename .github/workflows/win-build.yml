@@ -43,9 +43,8 @@ jobs:
         run: |
           echo "TCLDIR=`pwd`" >> $GITHUB_ENV
           cd ..
-          mkdir install
-          cd install
-          echo "INSTALLDIR=`pwd`" >> $GITHUB_ENV
+          mkdir C:\Tcl
+          echo "INSTALLDIR=C\Tcl" >> $GITHUB_ENV
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release install ${{ matrix.config }}
@@ -93,7 +92,7 @@ jobs:
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
-      - name: Install (${{ matrix.config }})
+      - name: Install Tk (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc install ${{ matrix.config }}
           if ($lastexitcode -ne 0) {
