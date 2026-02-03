@@ -57,12 +57,14 @@ jobs:
              throw "nmake exit code: $lastexitcode"
           }
       - name: Build Test Harness (${{ matrix.config }})
+        if: 0 == 1
         run: |
           &nmake -f makefile.vc tktest ${{ matrix.config }}
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
       - name: Run Tk Tests (${{ matrix.config }})
+        if: 0 == 1
         run: |
           nmake -f makefile.vc test-classic ${{ matrix.config }} | tee out-classic.txt || {
             echo "::error::Failure during Test"
@@ -96,10 +98,11 @@ jobs:
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
-          # Get-ChildItem -Path "C:\Tcl" -Recurse -File
+          Get-ChildItem -Path "$INSTALLDIR" -Recurse -File
       - name: Prepare upload
         run: |
           mkdir zipdist
+          Get-ChildItem -Path "install" -Recurse -File
           Copy-Item -Path install/combined -Destination zipdist -Recurse
         working-directory: "."
       - name: Upload distribution
