@@ -38,11 +38,6 @@ jobs:
           path: tcl
       - name: Init MSVC
         uses: ilammy/msvc-dev-cmd@v1
-      - name: Make Install Location
-        run: |
-          mkdir -p install/combined
-          echo "INSTALLDIR=$(cd install/combined;pwd)" >> $GITHUB_ENV
-        working-directory: "."
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release install ${{ matrix.config }}
