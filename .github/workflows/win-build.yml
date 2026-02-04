@@ -41,6 +41,8 @@ jobs:
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release install ${{ matrix.config }}
+          # List all environment variables with their names and values
+          Get-ChildItem Env: | ForEach-Object { "{0} = {1}" -f $_.Name, $_.Value }
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
