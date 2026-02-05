@@ -40,9 +40,11 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
       - name: Build Tcl (${{ matrix.config }})
         run: |
-          &nmake -f makefile.vc release install ${{ matrix.config }}
-          # List all environment variables with their names and values
-          Get-ChildItem Env: | ForEach-Object { "{0} = {1}" -f $_.Name, $_.Value }
+          &nmake -f makefile.vc release ${{ matrix.config }}
+        working-directory: tcl/win
+      - name: Install Tcl  (${{ matrix.config }})
+        run: |
+          &nmake -f makefile.vc release ${{ matrix.config }}
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
