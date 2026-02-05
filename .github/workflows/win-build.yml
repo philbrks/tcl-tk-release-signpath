@@ -100,20 +100,11 @@ jobs:
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
-          pwd
-          echo "INSTALLDIR=$INSTALLDIR"
-          # Get-ChildItem -Path "$INSTALLDIR" -Recurse -File
-      - name: Prepare upload
-        run: |
-          mkdir zipdist
-          Get-ChildItem -Path "C:\Tcl" -Recurse -File
-          Copy-Item -Path "C:\Tcl" -Destination zipdist -Recurse -Force
-        working-directory: "."
       - name: Upload distribution
         uses: actions/upload-artifact@v4
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
-          path: "zipdist"
+          path: "${INSTALL_DIR}"
   gcc:
     if: 1 == 1
     runs-on: windows-2025
