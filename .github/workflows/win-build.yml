@@ -13,6 +13,7 @@ env:
   ERROR_ON_FAILURES: 1
 jobs:
   msvc:
+    if: 1 == 0
     runs-on: windows-2025
     defaults:
       run:
@@ -114,7 +115,7 @@ jobs:
           name: "Tcl-Tk Release Distribution (Win64)"
           path: "zipdist"
   gcc:
-    if: 0 == 1
+    if: 1 == 1
     runs-on: windows-2025
     defaults:
       run:
@@ -178,6 +179,20 @@ jobs:
             echo "::error::Failure during Build"
             exit 1
           }
+          pwd
+          echo "INSTALL_DIR=$HOME/$INSTALL_DIR"
+          # Get-ChildItem -Path "$HOME/$INSTALLDIR" -Recurse -File
+      - name: Prepare upload
+        run: |
+          mkdir zipdist
+          Get-ChildItem -Path "$HOME/$INSTALL_DIR" -Recurse -File
+          Copy-Item -Path "$HOME/$INSTALL_DIR" -Destination zipdist -Recurse -Force
+        working-directory: "."
+      - name: Upload distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Tcl-Tk Release Distribution (Win64)"
+          path: "zipdist"
       - name: Run Tk Tests
         run: |
           make test-classic | tee out-classic.txt
