@@ -166,7 +166,7 @@ jobs:
         working-directory: tcl/win
       - name: Configure Tk (${{ matrix.config }})
         run: |
-          ./configure $CFGOPT "--prefix=$HOME/INSTALL_DIR" "--with-tcl=$TCL_CONFIG_PATH" || {
+          ./configure $CFGOPT "--prefix=$INSTALL_DIR" "--with-tcl=$TCL_CONFIG_PATH" || {
             cat config.log
             echo "::error::Failure during Configure"
             exit 1
@@ -180,12 +180,12 @@ jobs:
             exit 1
           }
           pwd
-          echo "INSTALL_DIR=$HOME/$INSTALL_DIR"
+          echo "INSTALL_DIR=${INSTALL_DIR}"
       - name: Prepare upload
         run: |
           mkdir zipdist
-          find "$HOME/$INSTALL_DIR" -type f
-          cp -r "$HOME/$INSTALL_DIR" zipdist
+          find "${INSTALL_DIR}" -type f
+          cp -r "${INSTALL_DIR}" zipdist
         working-directory: "."
       - name: Upload distribution
         uses: actions/upload-artifact@v4
