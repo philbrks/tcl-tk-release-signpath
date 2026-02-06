@@ -166,23 +166,23 @@ jobs:
           CFGOPT: --enable-64bit ${{ matrix.config }}
       - name: Build Tk
         run: |
-          make all install tktest || {
+          make all install || {
             echo "::error::Failure during Build"
             exit 1
           }
           pwd
           echo "INSTALL_DIR=${INSTALL_DIR}"
-      - name: Prepare upload
+      - name: Test Tk
         run: |
-          mkdir zipdist
-          find "${INSTALL_DIR}" -type f
-          cp -r "${INSTALL_DIR}" zipdist
-        working-directory: "."
+          make tktest || {
+            echo "::error::Failure during Tk Test"
+            exit 1
+          }
       - name: Upload distribution
         uses: actions/upload-artifact@v4
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
-          path: "zipdist"
+          path: "${INSTALL_DIR}/."
       - name: Run Tk Tests
         run: |
           make test-classic | tee out-classic.txt
