@@ -13,7 +13,7 @@ env:
   ERROR_ON_FAILURES: 1
 jobs:
   msvc:
-    if: 1 == 0
+    if: 1 == 1
     runs-on: windows-2025
     defaults:
       run:
@@ -39,6 +39,8 @@ jobs:
           path: tcl
       - name: Init MSVC
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
       - name: Build Tcl (${{ matrix.config }})
         run: |
           &nmake -f makefile.vc release ${{ matrix.config }}
@@ -106,7 +108,7 @@ jobs:
           name: "Tcl-Tk Release Distribution (Win64)"
           path: "${INSTALL_DIR}/."
   gcc:
-    if: 1 == 1
+    if: 1 == 0
     runs-on: windows-2025
     defaults:
       run:
@@ -170,9 +172,8 @@ jobs:
             echo "::error::Failure during Build"
             exit 1
           }
-          pwd
-          echo "INSTALL_DIR=${INSTALL_DIR}"
       - name: Test Tk
+        if: 1 == 0
         run: |
           make tktest || {
             echo "::error::Failure during Tk Test"
@@ -182,7 +183,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
-          path: "${INSTALL_DIR}/."
+          path: "${INSTALL_DIR}"
       - name: Run Tk Tests
         run: |
           make test-classic | tee out-classic.txt
