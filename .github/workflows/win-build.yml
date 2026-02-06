@@ -13,7 +13,7 @@ env:
   ERROR_ON_FAILURES: 1
 jobs:
   msvc:
-    if: 1 == 1
+    if: 1 == 0
     runs-on: windows-2025
     defaults:
       run:
@@ -108,7 +108,7 @@ jobs:
           name: "Tcl-Tk Release Distribution (Win64)"
           path: "C:/Tcl"
   gcc:
-    if: 1 == 0
+    if: 1 == 1
     runs-on: windows-2025
     defaults:
       run:
