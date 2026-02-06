@@ -51,8 +51,8 @@ jobs:
           if ($lastexitcode -ne 0) {
              throw "nmake exit code: $lastexitcode"
           }
-          Get-ChildItem -Path "C:\Tcl" -Recurse -File
-          Copy-Item -Path "C:\Tcl" -Destination zipdist -Recurse -Force
+          # Get-ChildItem -Path "C:\Tcl" -Recurse -File
+          # Copy-Item -Path "C:\Tcl" -Destination zipdist -Recurse -Force
         working-directory: tcl/win
       - name: Build Tk (${{ matrix.config }})
         run: |
@@ -106,7 +106,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Tcl-Tk Release Distribution (Win64)"
-          path: "${INSTALL_DIR}"
+          path: "C:\Tcl"
   gcc:
     if: 1 == 0
     runs-on: windows-2025
