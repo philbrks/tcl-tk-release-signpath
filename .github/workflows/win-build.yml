@@ -168,7 +168,7 @@ jobs:
           CFGOPT: --enable-64bit ${{ matrix.config }}
       - name: Build Tk
         run: |
-          make all install || {
+          make release || {
             echo "::error::Failure during Build"
             exit 1
           }
@@ -177,6 +177,12 @@ jobs:
         run: |
           make tktest || {
             echo "::error::Failure during Tk Test"
+            exit 1
+          }
+      - name: Install Tk
+        run: |
+          make install || {
+            echo "::error::Failure during Install"
             exit 1
           }
       - name: Upload distribution
